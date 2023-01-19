@@ -11,8 +11,10 @@
             <div class="card-body">
               {% include 'includes/errors.html' %}
             </div>
-          <form method="post" action="{% if form.instance.pk %}{% url 'posts:post_edit' form.instance.pk %}
-            {% else %}{% url 'posts:post_create' %}{% endif %}" enctype="multipart/form-data">
+          <form method="post" action="{% if form.instance.pk %}
+            {% url 'posts:post_edit' form.instance.pk %}
+            {% else %}{% url 'posts:post_create' %}
+            {% endif %}" enctype="multipart/form-data">
             {% csrf_token %}
             {% include 'includes/forms.html' %}
             <div class="d-flex justify-content-center">
