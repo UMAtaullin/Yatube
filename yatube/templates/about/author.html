@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+  {% block title %}Об авторе проекта{% endblock %}
+  {% block content %}
+  {% load static %}
+    <div class="container py-4">
+	  <div class="card my-2">
+		<h1 class="card-header display-6">Привет, я автор этого проекта</h1>
+		<div class="card-body">
+		  <div class="row">
+		  <aside class="col-md-4">
+			<img class="rounded mx-auto d-block img-fluid" img src="{% static 'img/author.jpg' %}"><br>
+		  </aside>
+		  <article class="col-md-8">
+			<p>Здравствуйте! Меня зовут Урал, я из Башкирии.</p>
+            <p>Это мой первый опыт в программировании.</p>
+            <p>Я долго шел в этом направлении.</p>
+            <p>По специальности я геолог, занимался геологическим моделированием.</p>
+            <p>Но в нашей работе было очень много рутины, которую можно было облегчить
+                путем написания скриптов на Python.</p>
+            <p>И вот я в Яндекс практикуме! И это новый мир!</p>
+			<p><a class="text-muted" href="https://github.com/Ural207/" target="_blank">
+                Моя страница на GitHub</a></p>
+		  </article>
+		  </div>
+		</div>
+	  </div>
+    </div>
+  {% endblock %}

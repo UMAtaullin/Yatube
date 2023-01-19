@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %} Последние обновления {% endblock %}
+{% block content %}
+<div class="container py-3">
+    <div class="mb-4"><h1>Последние обновления на сайте</h1></div>
+    {% for post in page_obj %}
+    {% include 'includes/pub.html' %}
+    {% if post.group %}
+      <a class="btn btn-outline-secondary" href="{% url 'posts:group_list' post.group.slug %}"
+         role="button"> все записи группы {{ post.group }}</a>
+    {% endif %}
+    {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
+    {% include 'posts/includes/paginator.html' %}
+</div>
+{% endblock content%}
