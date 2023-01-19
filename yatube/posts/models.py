@@ -55,5 +55,31 @@ class Post(models.Model):
         verbose_name_plural = 'Посты'
         ordering = ('-pub_date',)
 
+
+class Comment(models.Model):
+    post = models.ForeignKey(
+        Post,
+        related_name="comments",
+        verbose_name="Пост",
+        on_delete=models.CASCADE
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Автор",
+        related_name="comments",
+    )
+    text = models.TextField(
+        verbose_name="Текст комментария",
+        blank=True)
+    created = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата комментария",
+    )
+
+    class Meta:
+        verbose_name = "Комментарий"
+        verbose_name_plural = "Комментарии"
+
     def __str__(self):
         return self.text[:settings.CUT_TEXT]
