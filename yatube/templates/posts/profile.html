@@ -8,8 +8,6 @@
       <article>
         {% include 'includes/pub.html' %}
       </article>
-      <a class="btn btn-outline-secondary" href="{% url 'posts:post_detail' post.pk %}">
-        подробная информация</a>
 {% if post.group %}
   <a class="btn btn-outline-secondary" href="{% url 'posts:group_list' post.group.slug %}">
     все записи группы</a>

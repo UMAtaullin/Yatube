@@ -16,7 +16,8 @@
                 Автор: {{ post.author.get_full_name }}
               </li>
               <li class="list-group-item">
-                <a href="{% url 'posts:profile' post.author %}">все посты пользователя</a>
+                <a class="btn btn-outline-secondary" href="{% url 'posts:profile' post.author %}">
+                    все посты пользователя</a>
               </li>
             </ul>
           </aside>

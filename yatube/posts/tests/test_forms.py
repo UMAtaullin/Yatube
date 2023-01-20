@@ -6,7 +6,7 @@ from django.test import Client, TestCase
 from django.urls import reverse
 
 from ..forms import PostForm
-from ..models import Group, Post, User
+from ..models import Comment, Group, Post, User
 
 
 class PostFormTests(TestCase):
@@ -29,6 +29,8 @@ class PostFormTests(TestCase):
         cls.post_quantity = Post.objects.count()
 
     def setUp(self):
+        self.authorized_client = Client()
+        self.authorized_client.force_login(self.user)
         self.authorized_client_no_author = Client()
         self.authorized_client_no_author.force_login(self.user_no_author)
 
@@ -66,3 +68,47 @@ class PostFormTests(TestCase):
             f'{login}?{REDIRECT_FIELD_NAME}={reverse_name}',
             HTTPStatus.FOUND
         )
+
+    def test_comment_for_registered_users(self):
+        """Комментарии могут оставлять зарегистрированные пользователи."""
+        roles = (
+            self.authorized_client.post,
+            self.authorized_client_no_author.post,
+        )
+        for role in roles:
+            with self.subTest(role=role):
+                comment_data = {
+                    'text': 'тестовый коммент',
+                }
+                response = role(
+                    reverse('posts:add_comment', args=(self.post.id,)),
+                    data=comment_data,
+                    follow=True,
+                )
+                self.assertEqual(response.status_code, HTTPStatus.OK)
+                self.assertRedirects(response, reverse(
+                    'posts:post_detail', args=(self.post.id,)),
+                    HTTPStatus.FOUND
+                )
+                comment = Comment.objects.first()
+                self.assertEqual(comment.text, comment.text)
+        self.assertEqual(Comment.objects.count(), 2)
+
+    def test_comment_cant_comment(self):
+        """Комментарии не могут оставлять гости."""
+        comment_data = {
+            'text': 'тестовый коммент',
+        }
+        reverse_name = reverse('posts:add_comment', args=(self.post.id,))
+        response = self.client.post(
+            reverse_name,
+            data=comment_data,
+            follow=True,
+        )
+        login = reverse(settings.LOGIN_URL)
+        self.assertRedirects(
+            response,
+            f'{login}?{REDIRECT_FIELD_NAME}={reverse_name}',
+            HTTPStatus.FOUND
+        )
+        self.assertEqual(Comment.objects.count(), 0)

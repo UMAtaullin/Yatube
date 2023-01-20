@@ -75,3 +75,14 @@ class PostViewsTests(TestCase):
             with self.subTest(reverse_page=reverse_page):
                 response = self.follower_client.get(reverse_page)
                 self.check_context(response)
+
+    def test_cache_from_index_page(self):
+        """Кэширование работает."""
+        index = reverse("posts:index")
+        page_content = self.authorized_client.get(index).content
+        Post.objects.all().delete()
+        self.assertEqual(page_content,
+                         self.authorized_client.get(index).content)
+        cache.clear()
+        self.assertNotEqual(page_content,
+                            self.authorized_client.get(index).content)
