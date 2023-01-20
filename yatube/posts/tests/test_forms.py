@@ -8,6 +8,9 @@ from django.urls import reverse
 from ..forms import PostForm
 from ..models import Comment, Group, Post, User
 
+COMMENT_TEXT = "Текст нового коментария"
+COMMENT_FORM_DATA = {'text': COMMENT_TEXT}
+
 
 class PostFormTests(TestCase):
     @classmethod

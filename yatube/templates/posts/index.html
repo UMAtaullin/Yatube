@@ -4,6 +4,7 @@
 {% block content %}
 <div class="container py-3">
     <div class="mb-4"><h1>Последние обновления на сайте</h1></div>
+    {% include 'posts/includes/switcher.html' with index=True %}
     {% for post in page_obj %}
     {% include 'includes/pub.html' %}
     {% if post.group %}

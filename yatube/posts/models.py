@@ -48,13 +48,16 @@ class Post(models.Model):
         'Картинка',
         upload_to='posts/',
         blank=True,
-        help_text='Добавить картинку'
+        help_text='Загрузите картинку'
     )
 
     class Meta:
         verbose_name = 'Посты'
         verbose_name_plural = 'Посты'
         ordering = ('-pub_date',)
+
+    def __str__(self):
+        return self.text[:settings.CUT_TEXT]
 
 
 class Comment(models.Model):
@@ -84,3 +87,25 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text[:settings.CUT_TEXT]
+
+
+class Follow(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='follower',
+        verbose_name='Подписчик'
+    )
+    following = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='following',
+        verbose_name='Автор'
+    )
+
+    class Meta:
+        verbose_name = 'подписчик'
+        verbose_name_plural = 'подписчики'
+
+    def __str__(self):
+        return f'{self.user.username}, {self.following.username}'
