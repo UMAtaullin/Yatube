@@ -24,12 +24,17 @@ def group_list(request, slug):
 def profile(request, username):
     author = get_object_or_404(User, username=username)
     author_posts = author.posts.select_related('group')
-    following = Follow.objects.filter(
-        user=request.user.id, following=author)
-    return render(request, 'posts/profile.html',
-                  {'author': author,
-                   'following': following,
-                   'page_obj': paginator(author_posts, request)})
+    return render(request, 'posts/profile.html', {
+        'author': author,
+        'page_obj': paginator(author_posts, request),
+        'following': (
+            request.user != author
+            and request.user.is_authenticated
+            and Follow.objects.filter(
+                author=author,
+                user=request.user
+            ).exists())
+    })
 
 
 def post_detail(request, post_id):
@@ -82,7 +87,6 @@ def add_comment(request, post_id):
 
 @login_required
 def follow_index(request):
-    """Функция страницы с подписками."""
     posts = Post.objects.select_related('author', 'group').filter(
         author__following__user=request.user)
     context = {
@@ -93,19 +97,14 @@ def follow_index(request):
 
 @login_required
 def profile_follow(request, username):
-    """Функция подписки на автора."""
-    following = get_object_or_404(User, username=username)
-    follower = request.user
-    if follower != following and follower != following.follower:
-        Follow.objects.get_or_create(user=follower, following=following)
-    return redirect('posts:profile', username)
+    author = get_object_or_404(User, username=username)
+    if request.user != author:
+        Follow.objects.get_or_create(user=request.user, author=author)
+    return redirect('posts:profile', username=username)
 
 
 @login_required
 def profile_unfollow(request, username):
-    """Функция отписки от автора."""
-    Follow.objects.filter(
-        user=request.user,
-        following__username=username
-    ).delete()
-    return redirect('posts:profile', username)
+    get_object_or_404(
+        Follow, user=request.user, author__username=username).delete()
+    return redirect('posts:profile', username=username)

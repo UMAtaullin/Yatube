@@ -11,6 +11,7 @@ urlpatterns = [
     path('', include('posts.urls', namespace='group_posts')),
 ]
 
+handler403 = "core.views.permission_denied"
 handler404 = 'core.views.page_not_found'
 
 if settings.DEBUG:
