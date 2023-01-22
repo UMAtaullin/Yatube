@@ -8,9 +8,6 @@ from django.urls import reverse
 from ..forms import PostForm
 from ..models import Comment, Group, Post, User
 
-COMMENT_TEXT = "Текст нового коментария"
-COMMENT_FORM_DATA = {'text': COMMENT_TEXT}
-
 
 class PostFormTests(TestCase):
     @classmethod
@@ -73,7 +70,7 @@ class PostFormTests(TestCase):
         )
 
     def test_comment_for_registered_users(self):
-        """Комментарии могут оставлять зарегистрированные пользователи."""
+        """Комментарии могут оставлять авторизованные пользователи."""
         roles = (
             self.authorized_client.post,
             self.authorized_client_no_author.post,
