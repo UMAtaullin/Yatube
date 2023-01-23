@@ -34,6 +34,13 @@ class PostURLTests(TestCase):
             ('posts:post_create', None, 'posts/create_post.html', '/create/'),
             ('posts:post_edit', (cls.post.id,), 'posts/create_post.html',
              f'/posts/{cls.post.id}/edit/'),
+            ('posts:follow_index', None, 'posts/follow.html', '/follow/'),
+            ('posts:profile_follow', (cls.user,), None,
+             f'/profile/{cls.user.username}/follow/'),
+            ('posts:profile_unfollow', (cls.user,), None,
+             f'/profile/{cls.user.username}/unfollow/'),
+            ('posts:add_comment', (cls.post.id,), None,
+             f'/posts/{cls.post.id}/comment/'),
         )
 
     def setUp(self):
