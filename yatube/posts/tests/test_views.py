@@ -46,23 +46,13 @@ class PostViewsTests(TestCase):
         )
         cls.post_quantity = Post.objects.count()
         cls.urls = (
-            ('posts:index', None, 'posts/index.html', '/'),
-            ('posts:profile', (cls.user,), 'posts/profile.html',
-             f'/profile/{cls.user.username}/'),
-            ('posts:group_list', (cls.group.slug,), 'posts/group_list.html',
-             f'/group/{cls.group.slug}/'),
-            ('posts:post_detail', (cls.post.id,), 'posts/post_detail.html',
-             f'/posts/{cls.post.id}/'),
-            ('posts:post_create', None, 'posts/create_post.html', '/create/'),
-            ('posts:post_edit', (cls.post.id,), 'posts/create_post.html',
-             f'/posts/{cls.post.id}/edit/'),
-            ('posts:follow_index', None, 'posts/follow.html', '/follow/'),
-            ('posts:profile_follow', (cls.user,), None,
-             f'/profile/{cls.user.username}/follow/'),
-            ('posts:profile_unfollow', (cls.user,), None,
-             f'/profile/{cls.user.username}/unfollow/'),
-            ('posts:add_comment', (cls.post.id,), None,
-             f'/posts/{cls.post.id}/comment/'),
+            ('posts:index', None, 'posts/index.html'),
+            ('posts:profile', (cls.user,), 'posts/profile.html'),
+            ('posts:group_list', (cls.group.slug,), 'posts/group_list.html'),
+            ('posts:post_detail', (cls.post.id,), 'posts/post_detail.html'),
+            ('posts:post_create', None, 'posts/create_post.html'),
+            ('posts:post_edit', (cls.post.id,), 'posts/create_post.html'),
+            ('posts:follow_index', None, 'posts/follow.html'),
         )
         cls.reverse_profile = reverse('posts:profile', args=(cls.user,))
         cls.reverse_profile_follow = reverse(

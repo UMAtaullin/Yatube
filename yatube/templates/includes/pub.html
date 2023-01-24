@@ -1,22 +1,16 @@
 {% load thumbnail %}
 <article>
   <ul>
-    <li>
-      Автор: {{ post.author.get_full_name }}
-    </li>
-    <li>
-      Дата публикации: {{ post.pub_date|date:"d E Y" }}
-    </li>
+    <li>Автор: {{ post.author.get_full_name }}</li>
+    <li>Дата публикации: {{ post.pub_date|date:"d E Y" }}</li>
   </ul>
-    <p>
-      {{ post.text }}
-    </p>
+    <p>{{ post.text }}</p>
 </article>
 {% thumbnail post.image "760x400" crop="center" upscale=True as im %}
   <img class="card-img my-2" src="{{ im.url }}">
 {% endthumbnail %}
 {% if not dont_show_group %}
-<p><a class="btn btn-outline-secondary"
-    href="{% url 'posts:post_detail' post.id %}">подробная информация </a>
+<p>
+  <a class="btn btn-outline-secondary" href="{% url 'posts:post_detail' post.id %}">подробная информация</a>
 </p>
 {% endif %}

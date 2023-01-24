@@ -16,7 +16,7 @@ Django 2.2.19
 1. Клонировать репозиторий:
 
    ```python
-   git clone https://github.com/Ural207/hw03_forms.git
+   git clone https://github.com/Ural207/hw05_final.git
    ```
 
 2. Установить виртуальное окружение для проекта:
