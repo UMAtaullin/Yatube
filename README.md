@@ -8,21 +8,21 @@ Yatube - это социальная сеть с авторизацией, пе�
 
 ### Стек технологий
 
-* Python 3.9
-* Django 2.2.19
+* Python 3.9.10
+* Django 2.2.16
+* Pillow 8.3.1
 * Unittest
 * Pytest
 * SQLite3
-* CSS
-* JS
 * HTML
+* CSS
 
 ### Установка проекта из репозитория (Linux и macOS)
 
 1. Клонировать репозиторий:
 
    ```python
-   git clone https://github.com/Ural207/Yatube.git
+   git clone git@github.com:UMAtaullin/Yatube.git
    ```
 
 2. Установить виртуальное окружение для проекта:
